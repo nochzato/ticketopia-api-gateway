@@ -1,33 +1,23 @@
 package server
 
 import (
-	"fmt"
-	"net/http"
-	"os"
-	"strconv"
-	"time"
-
-	_ "github.com/joho/godotenv/autoload"
+	"github.com/gin-gonic/gin"
 )
 
+// Server serves the http requests.
 type Server struct {
-	port int
+	router *gin.Engine
 }
 
-func NewServer() *http.Server {
-	port, _ := strconv.Atoi(os.Getenv("PORT"))
-	NewServer := &Server{
-		port: port,
-	}
+// NewServer creates a new server.
+func NewServer() (*Server, error) {
+	server := &Server{}
 
-	// Declare Server config
-	server := &http.Server{
-		Addr:         fmt.Sprintf(":%d", NewServer.port),
-		Handler:      NewServer.RegisterRoutes(),
-		IdleTimeout:  time.Minute,
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 30 * time.Second,
-	}
+	server.setupRouter()
 
-	return server
+	return server, nil
+}
+
+func (s *Server) Start(addr string) error {
+	return s.router.Run(addr)
 }
