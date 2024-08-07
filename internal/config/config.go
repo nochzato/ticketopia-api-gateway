@@ -5,12 +5,17 @@ import (
 )
 
 type Config struct {
-	Server ServerConfig `mapstructure:"server"`
+	Server      ServerConfig      `mapstructure:"server"`
+	UserService UserServiceConfig `mapstructure:"user_service"`
 }
 
 type ServerConfig struct {
 	Port int    `mapstructure:"port"`
 	Host string `mapstructure:"host"`
+}
+
+type UserServiceConfig struct {
+	Addr string `mapstructure:"addr"`
 }
 
 func LoadConfig(path string) (config *Config, err error) {

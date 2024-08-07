@@ -1,4 +1,4 @@
-package server
+package api
 
 import (
 	"github.com/gin-gonic/gin"
@@ -6,6 +6,8 @@ import (
 
 func (s *Server) setupRouter() {
 	router := gin.Default()
+
+	router.POST("/users", s.createUser)
 
 	s.router = router
 }
