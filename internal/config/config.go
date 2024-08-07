@@ -4,7 +4,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Config contains configuration variables.
 type Config struct {
 	Server ServerConfig `mapstructure:"server"`
 }
@@ -14,8 +13,7 @@ type ServerConfig struct {
 	Host string `mapstructure:"host"`
 }
 
-// LoadConfig loads configuration from file.
-func LoadConfig(path string) (config Config, err error) {
+func LoadConfig(path string) (config *Config, err error) {
 	viper.AddConfigPath(path)
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
